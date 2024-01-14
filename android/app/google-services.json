@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "35641233724",
+    "project_id": "tadaapp-f298d",
+    "storage_bucket": "tadaapp-f298d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:35641233724:android:9477b0ac45db1fdcc94e39",
+        "android_client_info": {
+          "package_name": "com.example.tada"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6qczqksK1OZFsSr09eYE9h5TYpjryLWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
