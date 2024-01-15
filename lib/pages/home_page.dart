@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tada/components/widgtes/button_widget.dart';
-import 'package:tada/pages/onboarding/onboarding.dart';
+import 'package:tada/services/fetchUserFromRepo.dart';
 
-
-
+import '../components/variables/components.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,18 +13,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  //Search controller
+  TextEditingController controllerSearch = TextEditingController();
+
+
   //Just Test
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('HomePage'),centerTitle: true,),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                firebaseAuth.signOut();
+              },
+              icon: Icon(Icons.exit_to_app))
+        ],
+        title: Text('HomePage'),
+        centerTitle: true,
+      ),
       body: Scaffold(
-        body: Center(child: buttonComponent(text: 'sign out', func: () async{
-          //Just Test
-          await firebaseAuth.signOut();
-        }),),
-      )
+        body: Center(
+            child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            searchItem('Search...',controllerSearch),
+            Expanded(child: AllUserFetchData().fetchUserData())
+          ],
+        )),
+      ),
     );
   }
 }

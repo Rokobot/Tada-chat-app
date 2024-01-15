@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tada/components/methods/methods.dart';
+
+import '../services/fetchUserFromRepo.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -17,10 +20,12 @@ class _InitialPageState extends State<InitialPage> {
     checkRepo();
   }
 
+
   checkRepo() async{
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     firebaseAuth.authStateChanges().listen((event) {
-      print(event);
+
+
       if(event != null){
         replaceScreen(context, '/HomePage');
       }else{
