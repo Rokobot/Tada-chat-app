@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tada/models/userModel.dart';
+import 'package:tada/models/user_model.dart';
 
 class AuthService{
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -17,8 +19,11 @@ class AuthService{
        CollectionReference reference = FirebaseFirestore.instance.collection('Users');
        User? user  = FirebaseAuth.instance.currentUser;
        String? uid = user!.uid;
+       //Is that your JCode -> Join + Code
+       String JCode = '@'+Random().nextInt(1000).toString() + userName.substring(0,1);
+
        if(uid != null){
-         UserModel userModel = UserModel(userName: userName, email: email, password: password, userUID: uid, profilePhoto: '', onboardingShow: true);
+         UserModel userModel = UserModel(userName: userName, email: email, password: password, userUID: uid, profilePhoto: '', onboardingShow: true, JCode:JCode );
          await reference.doc(uid).set(userModel.toJson());
          return [true];
        }

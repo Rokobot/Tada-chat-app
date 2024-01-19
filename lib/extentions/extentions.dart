@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 extension validate on String {
   //Password check
   passwordOk(){
-    if(!(this.length < 6 && this.isEmpty)){
+    if(!(this.length < 6 || this.isEmpty)){
       return true;
     }else{
       return false;

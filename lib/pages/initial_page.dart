@@ -27,9 +27,9 @@ class _InitialPageState extends State<InitialPage> {
 
 
       if(event != null){
-        replaceScreen(context, '/HomePage');
+        replaceScreenNamed(context, '/HomePage');
       }else{
-        replaceScreen(context, '/SignUpPage');
+        replaceScreenNamed(context, '/SignUpPage');
       }
     });
   }

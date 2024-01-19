@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tada/extentions/extentions.dart';
 import 'package:tada/state_managment/auth/auth_bloc.dart';
+import 'package:vibration/vibration.dart';
 import '../../components/methods/methods.dart';
 import '../../components/widgtes/button_widget.dart';
 import '../../components/widgtes/text_field_widgte.dart';
@@ -63,6 +64,7 @@ class _SignInPageState extends State<SignInPage> {
                     visibleOrInvisible: false,
                     validate: (value) {
                       if(!(value.toString().emailOk())){
+                        Vibration.vibrate(duration: 200);
                         return 'Email is wrong!';
                       }
                     },
@@ -72,6 +74,7 @@ class _SignInPageState extends State<SignInPage> {
                     visibleOrInvisible: false,
                     validate: (value) {
                       if(!(value.toString().passwordOk())){
+                        Vibration.vibrate(duration: 200);
                         return 'Passwor is wrong!';
                       }
                     },
@@ -89,7 +92,7 @@ class _SignInPageState extends State<SignInPage> {
                       style: TextStyle(color: Colors.blue),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          nextScreen(context,'/SignUpPage');
+                          nextScreenNamed(context,'/SignUpPage');
                         })
                 ]))
               ],

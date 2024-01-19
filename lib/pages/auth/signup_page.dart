@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tada/extentions/extentions.dart';
 import 'package:tada/state_managment/auth/auth_bloc.dart';
+import 'package:vibration/vibration.dart';
 import '../../components/methods/methods.dart';
 import '../../components/widgtes/button_widget.dart';
 import '../../components/widgtes/text_field_widgte.dart';
@@ -67,6 +68,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         visibleOrInvisible: false,
                         validate: (value) {
                           if(!(value.toString().userNameOk())){
+                            Vibration.vibrate(duration: 200);
                             return 'Enter valid username!';
                           }
                         },
@@ -76,6 +78,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         visibleOrInvisible: false,
                         validate: (value) {
                           if(!(value.toString().emailOk())){
+                            Vibration.vibrate(duration: 200);
                             return 'Enter valid email!';
                           }
                         },
@@ -85,6 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         visibleOrInvisible: false,
                         validate: (value) {
                           if(!(value.toString().passwordOk())){
+                            Vibration.vibrate(duration: 200);
                             return 'Enter valid password!';
                           }
                         },
@@ -94,6 +98,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         visibleOrInvisible: false,
                         validate: (value) {
                           if(!(controllerPassword.text.toString().confirimPassword(value.toString()))){
+                            Vibration.vibrate(duration: 200);
                             return 'Passwords most be equal!';
                           }
                         },
@@ -113,7 +118,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: TextStyle(color: Colors.blue),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              nextScreen(context,'/SignInPage');
+                              nextScreenNamed(context,'/SignInPage');
                             })
                     ]))
                   ],

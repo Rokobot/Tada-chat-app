@@ -73,7 +73,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   )
                 : TextButton(
                     onPressed: () {
-                      nextScreen(context, '/HomePage');
+                      nextScreenNamed(context, '/HomePage');
                     },
                     child: Text(
                       'finish',

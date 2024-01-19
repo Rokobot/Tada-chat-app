@@ -6,6 +6,7 @@ class UserModel {
   final String password;
   final String userUID;
   final String profilePhoto;
+  final String JCode;
   final bool onboardingShow;
 
 
@@ -16,7 +17,9 @@ class UserModel {
     required this.password,
     required this.userUID,
     required this.profilePhoto,
-    required this.onboardingShow
+    required this.onboardingShow,
+    required this.JCode
+
   });
 
   //Convrt to Json file
@@ -28,6 +31,7 @@ class UserModel {
       'userUID': userUID,
       'profilePhoto': profilePhoto,
       'onboardingShow': onboardingShow,
+      'JCode': JCode,
     };
   }
 

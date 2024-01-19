@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 
 
-nextScreen (BuildContext context, String text){
+nextScreenNamed (BuildContext context, String text){
   Navigator.pushNamed(context, text)   ;
 }
 
 
-replaceScreen (BuildContext context, String text){
+replaceScreenNamed (BuildContext context, String text){
   Navigator.pushReplacementNamed(context, text);
 }
+
+
+nextScreen(BuildContext context, Widget page){
+  Navigator.push(context, MaterialPageRoute(builder: (context)=> page));
+}
+
