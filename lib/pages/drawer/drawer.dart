@@ -41,15 +41,21 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   child: Text(widget.jcode, style: TextStyle(fontSize: 15))),
               Spacer(),
               Flexible(flex: 1,
-                  child: GestureDetector(
+                  child: InkWell(
+                    highlightColor: Colors.green,
+                    splashColor: Colors.grey,
                     onTap: (){
+                      Vibration.vibrate(duration: 90);
                       nextScreen(context, ProfilePage(email: widget.email, JCode: widget.jcode, userName: widget.userName,));
                     },
                     child: ListTile(
                       leading: Icon(Icons.person_3), title: Text('Profile'),),
                   )),
               Flexible(flex: 1,
-                  child: GestureDetector(child: ListTile(
+                  child: InkWell(
+                    highlightColor: Colors.green,
+                    splashColor: Colors.grey,
+                    child: ListTile(
                       leading: Icon(Icons.settings), title: Text('Settings')),
                     onTap: () {
                       Vibration.vibrate(duration: 90);

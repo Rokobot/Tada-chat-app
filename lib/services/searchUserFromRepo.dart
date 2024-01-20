@@ -104,7 +104,7 @@ class _SearchUserFromRepoState extends State<SearchUserFromRepo> {
                               child: seacrhResultItem(snapshot.data!),
                               onTap: () {
                                 if(snapshot.data!.docs[0]['email'] != auth.currentUser!.email.toString()){
-                                  nextScreen(context, ChatPage(userName:snapshot.data!.docs[0]['userName'] ));
+                                  nextScreen(context, ChatPage(userName:snapshot.data!.docs[0]['userName'] , userUID: snapshot.data!.docs[0]['userUID'],));
                                 }
                                 setState(() {
                                   HelperFunction()
