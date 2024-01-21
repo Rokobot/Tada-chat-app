@@ -18,10 +18,10 @@ class HelperFunction{
   }
 
   //remove item from index
-  removeItemFromIndex(int index)async{
+  removeItemFromIndex(String user)async{
     SharedPreferences data = await SharedPreferences.getInstance();
     List<String>? lastUserJCode = data.getStringList('lastUserNameList');
-    lastUserJCode?.removeAt(index);
+    lastUserJCode?.remove(user);
     data.setStringList('lastUserNameList', lastUserJCode!);
   }
 

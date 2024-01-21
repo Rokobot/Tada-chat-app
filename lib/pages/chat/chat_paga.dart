@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:tada/components/const.dart';
 import 'package:tada/services/chat_service.dart';
 import 'package:vibration/vibration.dart';
@@ -51,7 +52,9 @@ class _ChatPageState extends State<ChatPage> {
         return Center(child: CircularProgressIndicator(color: Colors.blue,),);
       }
       return ListView.builder( itemCount: snapshot.data!.docs.length,itemBuilder: (context, index){
-        return messsageItem(snapshot.data!.docs[index]['message'],snapshot.data!.docs[index]['senderUID']);
+        DateTime date = DateTime.parse(snapshot.data!.docs[index]['timeStamp'].toDate().toString());
+        String time = DateFormat('HH:mm').format(date);
+        return messsageItem(snapshot.data!.docs[index]['message'],snapshot.data!.docs[index]['senderUID'], snapshot.data!.docs[index]['senderEmail'],time.toString());
       },);
     });
   }
@@ -88,6 +91,7 @@ class _ChatPageState extends State<ChatPage> {
               highlightColor: Colors.green,
               onPressed: () {
               ChatService().sendMessage(widget.userUID, messageController.text);
+              messageController.text = '';
             Vibration.vibrate(duration: 100);
           }, icon: Icon(Icons.send))
         ],

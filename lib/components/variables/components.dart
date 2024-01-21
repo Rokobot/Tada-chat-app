@@ -131,44 +131,30 @@ seacrhResultItem(QuerySnapshot<Map<String, dynamic>> data) {
             borderRadius: BorderRadius.circular(10),
             color: CusColors().cusYellow,
           ),
-          child: InkWell(
-            highlightColor: Colors.green,
-            splashColor: Colors.grey,
-            hoverColor: Colors.green,
-            focusColor: Colors.green,
-            onTap: () {
-              nextScreen(
-                  context,
-                  ChatPage(
-                    userName: data.docs[index]['userName'],
-                    userUID: data.docs[0]['userUID'],
-                  ));
-            },
-            child: ListTile(
-              leading: CircleAvatar(
-                  radius: 20,
-                  child: Text(
-                    data.docs[index]['email']
-                        .toString()
-                        .substring(0, 1)
-                        .toUpperCase(),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-                  )),
-              trailing: TextButton(
-                  style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          CusColors().cusGreenYellow)),
-                  onPressed: () {
-                    Vibration.vibrate(duration: 90);
-                  },
-                  child: Text(
-                    'connect',
-                    style: TextStyle(color: Colors.black),
-                  )),
-              title: Text(
-                data.docs[index]['userName'],
-                style: TextStyle(color: Colors.black),
-              ),
+          child: ListTile(
+            leading: CircleAvatar(
+                radius: 20,
+                child: Text(
+                  data.docs[index]['email']
+                      .toString()
+                      .substring(0, 1)
+                      .toUpperCase(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                )),
+            trailing: TextButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        CusColors().cusGreenYellow)),
+                onPressed: () {
+                  Vibration.vibrate(duration: 90);
+                },
+                child: Text(
+                  'connect',
+                  style: TextStyle(color: Colors.black),
+                )),
+            title: Text(
+              data.docs[index]['userName'],
+              style: TextStyle(color: Colors.black),
             ),
           ),
         ),
@@ -179,27 +165,21 @@ seacrhResultItem(QuerySnapshot<Map<String, dynamic>> data) {
 }
 
 //Last searched user item
-lastSearched(String name, void Function() func) {
-  return InkWell(
-    highlightColor: Colors.green,
-    splashColor: Colors.grey,
-    borderRadius: BorderRadius.circular(10),
-    child: Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.yellow),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-              child: Text(
-            name,
-            style: TextStyle(color: Colors.black),
-          )),
-        ),
+lastSearched(String name,) {
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10), color: Colors.yellow),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+            child: Text(
+          name,
+          style: TextStyle(color: Colors.black),
+        )),
       ),
     ),
-    onLongPress: func,
   );
 }
 
@@ -216,7 +196,7 @@ customListTile(Text text, dynamic element) {
 }
 
 //Message Item
-messsageItem(String message, String UID) {
+messsageItem(String message, String UID, String sender, String timeStamp) {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   return UID == firebaseAuth.currentUser!.uid
       ? Padding(
@@ -225,12 +205,13 @@ messsageItem(String message, String UID) {
           alignment: Alignment.centerRight,
           width: 100, // Set the width as per your requirement
           child: Container(
-            decoration: BoxDecoration(color: CusColors().customGreen, borderRadius: BorderRadius.only(topRight: Radius.circular(100), topLeft: Radius.circular(100), bottomRight: Radius.circular(100))),
+            decoration: BoxDecoration(color: CusColors().customGreen, borderRadius: BorderRadius.only(topRight: Radius.circular(100), topLeft: Radius.circular(100), bottomLeft: Radius.circular(100))),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(message, style: TextStyle(fontSize: 21, color: Colors.white),)
+                  Text(message, style: TextStyle(fontSize: 21, color: Colors.white),),
+                  Text(timeStamp, style: TextStyle(fontSize: 10, color: Colors.white),),
                 ],
               ),
             ),
@@ -248,7 +229,8 @@ messsageItem(String message, String UID) {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              Text(message, style: TextStyle(fontSize: 21, color: Colors.black),)
+              Text(message, style: TextStyle(fontSize: 21, color: Colors.white),),
+              Text(timeStamp, style: TextStyle(fontSize: 10, color: Colors.white),),
             ],
           ),
         ),

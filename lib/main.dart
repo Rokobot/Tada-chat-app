@@ -12,6 +12,7 @@ import 'package:tada/pages/initial_page.dart';
 import 'package:tada/pages/onboarding/onboarding.dart';
 import 'package:tada/pages/settings_page.dart';
 import 'package:tada/state_managment/auth/auth_bloc.dart';
+import 'package:tada/state_managment/searched_story/searched_story_bloc.dart';
 import 'package:tada/state_managment/theme/theme_bloc.dart';
 
 void main() async {
@@ -38,20 +39,27 @@ class _MyAppState extends State<MyApp> {
     initTheme();
   }
 
-  initTheme() async{
+  initTheme() async {
     valueTheme = await HelperFunction().getThemeMode();
   }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-            BlocProvider(create: (BuildContext context) => AuthBloc(),),
-            BlocProvider(create: (BuildContext context) => ThemeBloc(),)
+        BlocProvider(
+          create: (BuildContext context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => ThemeBloc(),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => SearchedStoryBloc(),
+        )
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {
-
-          if(state is CurrentThemeState){
+          if (state is CurrentThemeState) {
             bool valueTheme = state.themeIs;
             return buildMaterialApp(valueTheme);
           }
@@ -63,17 +71,17 @@ class _MyAppState extends State<MyApp> {
 
   MaterialApp buildMaterialApp(bool valueTheme) {
     return MaterialApp(
-            darkTheme: valueTheme ?  ThemeData.dark() : ThemeData.light(),
-            routes: {
-              '/HomePage': (context) => HomePage(),
-              '/SignInPage': (context) => SignInPage(),
-              '/SignUpPage': (context) => SignUpPage(),
-              '/OnboardingPage': (context) => OnboardingPage(),
-              '/Settings': (context) => SettingsPage(),
-            },
-            home: Scaffold(
-              body: InitialPage(),
-            ),
-          );
+      darkTheme: valueTheme ? ThemeData.dark() : ThemeData.light(),
+      routes: {
+        '/HomePage': (context) => HomePage(),
+        '/SignInPage': (context) => SignInPage(),
+        '/SignUpPage': (context) => SignUpPage(),
+        '/OnboardingPage': (context) => OnboardingPage(),
+        '/Settings': (context) => SettingsPage(),
+      },
+      home: Scaffold(
+        body: InitialPage(),
+      ),
+    );
   }
 }

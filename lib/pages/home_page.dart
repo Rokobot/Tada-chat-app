@@ -22,10 +22,13 @@ class _HomePageState extends State<HomePage> {
 
   //Search controller && querySnap req
   TextEditingController controllerSearch = TextEditingController();
-  String searchName = '';
+  String searchJCode = '';
 
   //Drawer open
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //Index of search and all user
+  int currrentIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -35,28 +38,39 @@ class _HomePageState extends State<HomePage> {
         automaticallyImplyLeading: false,
         title: Text('Discussion👋🏻'),
         centerTitle: true,
-        leading: IconButton(onPressed: () {
-          _scaffoldKey.currentState?.openDrawer();
-        },icon: Icon(Icons.menu),),
+        leading: IconButton(
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+          icon: Icon(Icons.menu),
+        ),
       ),
-      drawer: Drawer(child: FetchCurrentUserInfo().getCurrentInfo(),),
+      drawer: Drawer(
+        child: FetchCurrentUserInfo().getCurrentInfo(),
+      ),
       body: Scaffold(
         body: Center(
             child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            searchItem('Search...',controllerSearch, (value) {
+            searchItem('Search...', controllerSearch, (value) {
               setState(() {
-                searchName = value;
+                searchJCode = value;
+                print(searchJCode);
               });
             }),
-            searchName == ''? Container() :  Expanded(flex: 4, child: SearchUserFromRepo(user: searchName,) ),
-            Expanded(flex: 2, child: AllUserFetchData().fetchUserData(context))
+            searchJCode == ''
+                ? Expanded(
+                    flex: 1, child: AllUserFetchData().fetchUserData(context))
+                : Expanded(
+                    flex: 4,
+                    child: SearchUserFromRepo(
+                      searchJCode: searchJCode,
+                    )),
           ],
         )),
       ),
     );
   }
 }
-
