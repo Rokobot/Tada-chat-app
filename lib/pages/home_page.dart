@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tada/components/const.dart';
-import 'package:tada/components/methods/methods.dart';
-import 'package:tada/helper/helper_function.dart';
 import 'package:tada/services/fetchUserFromRepo.dart';
+import 'package:tada/services/notfService.dart';
 import 'package:tada/services/searchUserFromRepo.dart';
-import 'package:vibration/vibration.dart';
 import '../components/variables/components.dart';
 import '../services/fetchCurrentUserInfo.dart';
 
@@ -30,6 +27,8 @@ class _HomePageState extends State<HomePage> {
   //Index of search and all user
   int currrentIndex = 1;
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +43,9 @@ class _HomePageState extends State<HomePage> {
           },
           icon: Icon(Icons.menu),
         ),
+        actions: [
+          NotfService().notfListShow(context)
+        ],
       ),
       drawer: Drawer(
         child: FetchCurrentUserInfo().getCurrentInfo(),

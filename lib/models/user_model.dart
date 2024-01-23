@@ -7,7 +7,8 @@ class UserModel {
   final String userUID;
   final String profilePhoto;
   final String JCode;
-  final bool onboardingShow;
+  final List<String> notfList;
+  final List<String> connectList;
 
 
   //Instructor
@@ -17,8 +18,9 @@ class UserModel {
     required this.password,
     required this.userUID,
     required this.profilePhoto,
-    required this.onboardingShow,
-    required this.JCode
+    required this.JCode,
+    required this.notfList,
+    required this.connectList,
 
   });
 
@@ -30,8 +32,9 @@ class UserModel {
       'password': password,
       'userUID': userUID,
       'profilePhoto': profilePhoto,
-      'onboardingShow': onboardingShow,
       'JCode': JCode,
+      'notfList': notfList,
+      'connectList': connectList,
     };
   }
 

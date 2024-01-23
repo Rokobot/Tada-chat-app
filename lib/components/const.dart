@@ -6,3 +6,4 @@ class CusColors{
   final cusYellow = const Color(0XFFd6c018);
 
 }
+

@@ -23,7 +23,7 @@ class AuthService{
        String JCode = '@'+Random().nextInt(1000).toString() + userName.substring(0,1);
 
        if(uid != null){
-         UserModel userModel = UserModel(userName: userName, email: email, password: password, userUID: uid, profilePhoto: '', onboardingShow: true, JCode:JCode );
+         UserModel userModel = UserModel(userName: userName, email: email, password: password, userUID: uid, profilePhoto: '', JCode:JCode , connectList: [], notfList: []);
          await reference.doc(uid).set(userModel.toJson());
          return [true];
        }

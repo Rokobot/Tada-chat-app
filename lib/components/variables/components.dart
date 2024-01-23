@@ -1,14 +1,12 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tada/components/const.dart';
 import 'package:tada/pages/chat/chat_paga.dart';
-
+import 'package:tada/pages/notfication_page.dart';
+import 'package:tada/services/notfService.dart';
 import 'package:vibration/vibration.dart';
-
 import '../methods/methods.dart';
 
 //show  all users in gridview
@@ -60,10 +58,16 @@ Widget userItem(
                           color: CusColors().cusGreenYellow,
                           borderRadius: BorderRadius.circular(25)),
                       child: Center(
-                          child: Text(
-                        'say hello',
-                        style: TextStyle(color: Colors.black),
-                      ))))
+                          child: TextButton(
+                            onPressed: (){
+                              NotfService().sendConnectNotf(UID);
+                              print('Hello');
+                            },
+                            child: Text(
+                              'connect',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ))))
             ],
           )),
         ),
@@ -234,6 +238,52 @@ messsageItem(String message, String UID, String sender, String timeStamp) {
             ],
           ),
         ),
+      ),
+    ),
+  );
+}
+
+notfItem(int data, BuildContext context){
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: InkWell(
+      onTap: (){
+        nextScreen(context, NotificationPage());
+      },
+      highlightColor: Colors.green,
+      focusColor: Colors.white,
+      borderRadius: BorderRadius.circular(10),
+      child: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 10,
+              top: 5,
+              child: Icon(Icons.notifications, ) ,
+            ),
+            Positioned(
+              top: 13,
+              right: 6,
+              child: Text(data == 0 ? "": data.toString(), style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 19),)),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+
+notfReqItem(String userName){
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Ink(
+      decoration: BoxDecoration( color: CusColors().customGreen,borderRadius: BorderRadius.circular(10)),
+      child: InkWell(
+        onTap: (){},
+        focusColor: Colors.blue,
+        child: ListTile(
+          title: Text.rich(TextSpan(text: '${userName}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),children: [TextSpan(text: ' send you connection', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15))])),),
       ),
     ),
   );
