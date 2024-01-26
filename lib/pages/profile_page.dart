@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tada/components/const.dart';
 
 class ProfilePage extends StatefulWidget {
   final String userName;
@@ -18,19 +19,85 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${widget.userName}\'s profile👀'),),
-      body: Center(
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              child: Text(widget.userName.substring(0,1),style: TextStyle(fontSize: 60),),
-              radius: 60,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(width: 10,),
+                IconButton(onPressed: (){
+                  Navigator.pop(context);
+                }, icon: Icon(Icons.arrow_back_ios)),
+              Spacer(),
+              Card(elevation: 10, child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.edit_note_sharp, size: 33,),
+              )),
+                SizedBox(width: 10,),
+            ],),
+
+            Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.white),
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: CircleAvatar(
+                  child: Text(widget.userName.substring(0,1),style: TextStyle(fontSize: 60),),
+                  radius: 60,
+                ),
+              ),
             ),
-            Divider(indent: 25,endIndent: 25,),
-            Text(widget.userName),
-            Text(widget.email),
-            Text(widget.JCode)
+            SizedBox(height: 30,),
+            Card(elevation: 10, child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('  ${widget.userName}', style: TextStyle(fontSize: 16),),
+            )),
+            Card(elevation: 10, child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('  ${widget.email}', style: TextStyle(fontSize: 16),),
+            )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                  color: CusColors().customGreen,
+                  elevation: 10, child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Thanks to Tada, I made new friends. I learned their language, culture, and cuisine. Tada is a truly wonderful application.', style: TextStyle(fontSize: 15,), textAlign: TextAlign.center,),
+              )),
+            ),
+            Expanded(
+              child: GridView.builder( shrinkWrap: true, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount( crossAxisCount: 2, childAspectRatio: 2, ), itemCount: 2,itemBuilder: (contex, index){
+                List<dynamic> joinCodeAndConnect = ['${widget.JCode} ', '10'];
+                List<dynamic> nameJoinCodeAndConnect = ['JCODE ', 'Connection'];
+
+                return Card(
+                    color: CusColors().customGreen,
+                    elevation: 10, child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Text(nameJoinCodeAndConnect[index], style: TextStyle(fontSize: 16),),
+                    Text(joinCodeAndConnect[index], style: TextStyle(fontSize: 32),)
+                  ],)),
+                ));
+              }),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                  color: Colors.red,
+                  elevation: 10, child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Sign out', style: TextStyle(fontSize: 15,), textAlign: TextAlign.center,),
+              )),
+            ),
+
+            SizedBox(height: 30,),
+
+
           ],
         ),
       ),

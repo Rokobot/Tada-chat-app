@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:tada/components/const.dart';
 import 'package:tada/models/notification_model.dart';
 import '../components/variables/components.dart';
 
@@ -50,12 +49,11 @@ class NotfService extends ChangeNotifier {
       DocumentReference documentReference = await FirebaseFirestore.instance
           .collection('Users')
           .doc(targetUserUID);
-      List<String> userInfoList = [currentUserUID, userName];
-      userInfoList.sort();
-      String userInfo = userInfoList.join('_');
       NotificationModel notificationModel =
-          NotificationModel(notfList: FieldValue.arrayUnion([userInfo]));
-      documentReference.update(notificationModel.toMap());
+          NotificationModel(userUID: currentUserUID, userName: userName);
+      documentReference.update({
+        'notfList': FieldValue.arrayUnion([notificationModel.toMap()])
+      });
     });
   }
 
@@ -82,18 +80,76 @@ class NotfService extends ChangeNotifier {
               ),
             );
           }
-          List<dynamic> data = snapshot.data!.docs[0]['notfList'];
-
-          if (data.length != 0) {
-            String userInfoString = data[0];
-            List<String> userInfo = userInfoString.split('_');
-            return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  return notfReqItem(userInfo[1]);
-                });
+          if (snapshot.data!.docs.isNotEmpty) {
+            List<dynamic> data = snapshot.data!.docs[0]['notfList'];
+            if (data.length != 0) {
+              return ListView.builder(
+                  itemCount: data.length,
+                  itemBuilder: (context, index) {
+                    return notfReqItem(data[index]['userName'], index);
+                  });
+            } else {
+              return Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    color: Colors.orange,
+                    Icons.notifications_active,
+                    size: 120,
+                  ),
+                  Text(
+                    'No have any notification',
+                    style: TextStyle(color: Colors.orange),
+                  )
+                ],
+              ));
+            }
           }
           return Container();
         });
+  }
+
+  acceptRequest(String userUID, int index) async {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+    //Delete request from notfList
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(firebaseAuth.currentUser!.uid)
+        .get();
+    List<dynamic> notfList = documentSnapshot.get('notfList');
+    [notfList.removeAt(index)];
+    print([notfList]);
+
+    //Add connect list new user
+    DocumentReference documentReference2 = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(firebaseAuth.currentUser!.uid);
+    documentReference2.update({
+      'connectList': FieldValue.arrayUnion([userUID]),
+      'notfList': notfList
+    });
+  }
+
+  rejectRequest(int index) async {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+    //Delete request from notfList
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(firebaseAuth.currentUser!.uid)
+        .get();
+    List<dynamic> notfList = documentSnapshot.get('notfList');
+    [notfList.removeAt(index)];
+    print([notfList]);
+
+    //Add connect list new user
+    DocumentReference documentReference2 = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(firebaseAuth.currentUser!.uid);
+    documentReference2.update({
+      'notfList': notfList
+    });
   }
 }

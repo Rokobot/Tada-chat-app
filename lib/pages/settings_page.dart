@@ -52,7 +52,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       Vibration.vibrate(duration: 90);
                       valueTheme = value; // Update the valueTheme variable correctly
                       context.read<ThemeBloc>().add(ChangeThemeEvent(themeValue: value));
-                      print(value);
                     });
                   },
                 ),),

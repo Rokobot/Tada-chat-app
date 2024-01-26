@@ -23,12 +23,10 @@ Widget userItem(
               userUID: UID,
             ));
       },
-      child: Container(
-        decoration: BoxDecoration(
-          color: CusColors().customGreen,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        height: 100, // Set the desired height
+      child: Card(
+        color: CusColors().customGreen,
+        elevation: 10,
+        // Set the desired height
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
@@ -58,16 +56,28 @@ Widget userItem(
                           color: CusColors().cusGreenYellow,
                           borderRadius: BorderRadius.circular(25)),
                       child: Center(
-                          child: TextButton(
-                            onPressed: (){
-                              NotfService().sendConnectNotf(UID);
-                              print('Hello');
-                            },
-                            child: Text(
+                          child: InkWell(
+                        highlightColor: Colors.white,
+                        focusColor: Colors.orange,
+                        onTap: () {
+                          Vibration.vibrate(duration: 90);
+                          NotfService().sendConnectNotf(UID);
+                          print('Hello');
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add,
+                              color: Colors.black,
+                            ),
+                            Text(
                               'connect',
                               style: TextStyle(color: Colors.black),
-                            ),
-                          ))))
+                            )
+                          ],
+                        ),
+                      ))))
             ],
           )),
         ),
@@ -147,8 +157,8 @@ seacrhResultItem(QuerySnapshot<Map<String, dynamic>> data) {
                 )),
             trailing: TextButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        CusColors().cusGreenYellow)),
+                    backgroundColor:
+                        MaterialStateProperty.all(CusColors().cusGreenYellow)),
                 onPressed: () {
                   Vibration.vibrate(duration: 90);
                 },
@@ -169,7 +179,9 @@ seacrhResultItem(QuerySnapshot<Map<String, dynamic>> data) {
 }
 
 //Last searched user item
-lastSearched(String name,) {
+lastSearched(
+  String name,
+) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Container(
@@ -204,50 +216,72 @@ messsageItem(String message, String UID, String sender, String timeStamp) {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   return UID == firebaseAuth.currentUser!.uid
       ? Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Container(
-          alignment: Alignment.centerRight,
-          width: 100, // Set the width as per your requirement
+          padding: const EdgeInsets.all(4.0),
           child: Container(
-            decoration: BoxDecoration(color: CusColors().customGreen, borderRadius: BorderRadius.only(topRight: Radius.circular(100), topLeft: Radius.circular(100), bottomLeft: Radius.circular(100))),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(message, style: TextStyle(fontSize: 21, color: Colors.white),),
-                  Text(timeStamp, style: TextStyle(fontSize: 10, color: Colors.white),),
-                ],
+            alignment: Alignment.centerRight,
+            width: 100, // Set the width as per your requirement
+            child: Container(
+              decoration: BoxDecoration(
+                  color: CusColors().customGreen,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(100),
+                      topLeft: Radius.circular(100),
+                      bottomLeft: Radius.circular(100))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      message,
+                      style: TextStyle(fontSize: 21, color: Colors.white),
+                    ),
+                    Text(
+                      timeStamp,
+                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      )
+        )
       : Padding(
-    padding: const EdgeInsets.all(4.0),
-    child: Container(
-      alignment: Alignment.centerLeft,
-      width: 100, // Set the width as per your requirement
-      child: Container(
-        decoration: BoxDecoration(color: Colors.grey, borderRadius: BorderRadius.only(topRight: Radius.circular(100), topLeft: Radius.circular(100), bottomRight: Radius.circular(100))),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Text(message, style: TextStyle(fontSize: 21, color: Colors.white),),
-              Text(timeStamp, style: TextStyle(fontSize: 10, color: Colors.white),),
-            ],
+          padding: const EdgeInsets.all(4.0),
+          child: Container(
+            alignment: Alignment.centerLeft,
+            width: 100, // Set the width as per your requirement
+            child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(100),
+                      topLeft: Radius.circular(100),
+                      bottomRight: Radius.circular(100))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      message,
+                      style: TextStyle(fontSize: 21, color: Colors.white),
+                    ),
+                    Text(
+                      timeStamp,
+                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    ),
-  );
+        );
 }
 
-notfItem(int data, BuildContext context){
+notfItem(int data, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: InkWell(
-      onTap: (){
+      onTap: () {
         nextScreen(context, NotificationPage());
       },
       highlightColor: Colors.green,
@@ -260,12 +294,20 @@ notfItem(int data, BuildContext context){
             Positioned(
               left: 10,
               top: 5,
-              child: Icon(Icons.notifications, ) ,
+              child: Icon(
+                Icons.notifications,
+              ),
             ),
             Positioned(
-              top: 13,
-              right: 6,
-              child: Text(data == 0 ? "": data.toString(), style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 19),)),
+                top: 13,
+                right: 6,
+                child: Text(
+                  data == 0 ? "" : data.toString(),
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19),
+                )),
           ],
         ),
       ),
@@ -273,17 +315,52 @@ notfItem(int data, BuildContext context){
   );
 }
 
-
-notfReqItem(String userName){
+notfReqItem(String userName, int index) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: Ink(
-      decoration: BoxDecoration( color: CusColors().customGreen,borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+          color: CusColors().customGreen,
+          borderRadius: BorderRadius.circular(10)),
       child: InkWell(
-        onTap: (){},
+        onTap: () {},
         focusColor: Colors.blue,
         child: ListTile(
-          title: Text.rich(TextSpan(text: '${userName}', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,),children: [TextSpan(text: ' send you connection', style: TextStyle(fontWeight: FontWeight.normal, fontSize: 15))])),),
+          title: Text.rich(TextSpan(
+              text: '${userName}',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              children: [
+                TextSpan(
+                    text: ' send you connection',
+                    style:
+                        TextStyle(fontWeight: FontWeight.normal, fontSize: 15))
+              ])),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    NotfService().acceptRequest(userName, index);
+                  },
+                  icon: Icon(
+                    Icons.verified_user,
+                    color: Colors.green,
+                  )),
+              IconButton(
+                  onPressed: () {
+                    NotfService().rejectRequest(index);
+                  },
+                  icon: Icon(
+                    Icons.close_sharp,
+                    color: Colors.red,
+                    size: 30,
+                  ))
+            ],
+          ),
+        ),
       ),
     ),
   );

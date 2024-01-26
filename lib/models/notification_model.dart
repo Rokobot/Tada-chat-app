@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NotificationModel{
-  final FieldValue notfList;
+  final String userUID ;
+  final String userName;
 
-  NotificationModel({required this.notfList});
+  NotificationModel({required this.userUID, required this.userName});
 
   //Conver to map
   Map<String, dynamic> toMap(){
     return {
-      'notfList': notfList,
+      'userUID': userUID,
+      'userName': userName,
     };
   }
 

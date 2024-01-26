@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   initTheme() async {
-    valueTheme = await HelperFunction().getThemeMode();
+    valueTheme = await HelperFunction().getThemeMode() ?? false;
   }
 
   @override
@@ -71,6 +71,7 @@ class _MyAppState extends State<MyApp> {
 
   MaterialApp buildMaterialApp(bool valueTheme) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       darkTheme: valueTheme ? ThemeData.dark() : ThemeData.light(),
       routes: {
         '/HomePage': (context) => HomePage(),

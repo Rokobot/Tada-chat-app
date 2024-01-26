@@ -45,7 +45,10 @@ dependencies:
   shared_preferences: ^2.2.2
   vibration: ^1.8.4
   intl: ^0.19.0
+  rive: ^0.9.1
   line_icons: ^2.0.3
+  chewie: ^1.0.0
+  video_player: ^2.8.2
 
 dev_dependencies:
   flutter_test:
@@ -70,8 +73,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - asset/riv/
+    - asset/video/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

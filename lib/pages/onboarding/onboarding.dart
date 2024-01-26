@@ -44,10 +44,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
             child: PageView(
               controller: controller,
               children: [
-                pageViewItems(Colors.white, Icons.add_alert_rounded, 'Welcome'),
-                pageViewItems(Colors.white, Icons.adb_sharp, 'Hello to you'),
+                pageViewItems( Colors.transparent,Icons.add, 'I can\'t wait to show you your new friends'),
+                pageViewItems(Colors.transparent, Icons.adb_sharp, 'Enjoy your life with Tada'),
                 pageViewItems(
-                    Colors.white, Icons.account_tree_sharp, 'Nice to meet you'),
+                    Colors.transparent, Icons.account_tree_sharp, 'Here you are, now everything is for you'),
               ],
             ),
           ),
@@ -80,7 +80,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   )
                 : TextButton(
                     onPressed: () {
-                      nextScreenNamed(context, '/HomePage');
+                      replaceScreenNamed(context, '/HomePage');
                     },
                     child: Text(
                       'finish',
@@ -135,7 +135,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             height: 10,
           ),
           Container(
-            child: Text(text),
+            margin: EdgeInsets.all(10),
+            child: Text(text,textAlign: TextAlign.center,style: TextStyle(fontSize: 23),),
           )
         ],
       ),

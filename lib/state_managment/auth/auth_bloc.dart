@@ -27,7 +27,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         /*
         if(OnboardingShow == true ? Onboarding : HomePage)
          */
-        nextScreenNamed(event.context, '/OnboardingPage');
+        replaceScreenNamed(event.context, '/OnboardingPage');
       }else{
         emit(AuthSuccesState());
         ScaffoldMessenger.of(event.context).showSnackBar(SnackBar(content: Text(value[1].toString()) ));
@@ -42,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await AuthService().signInWithEmailAndPassword(email: event.email, passwrod: event.password).then((value){
       if(value[0]){
         emit(AuthSuccesState());
-        nextScreenNamed(event.context, '/HomePage');
+        replaceScreenNamed(event.context, '/HomePage');
       }else{
         emit(AuthSuccesState());
         ScaffoldMessenger.of(event.context).showSnackBar(SnackBar(content: Text(value[1].toString())));
