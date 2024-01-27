@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rive/rive.dart';
 import 'package:tada/components/const.dart';
 import 'package:tada/services/chat_service.dart';
 import 'package:vibration/vibration.dart';
@@ -25,18 +26,22 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: CusColors().custPink,
         title: Text(widget.userName),
         centerTitle: true,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          //chatList ->  StreamBuilder()
-          Expanded(flex:10 ,child: buildChatList(),),
-          //Send message -> TextField()
-          Flexible( flex: 1, child: buildSendMessage(messageController))
-        ],
-      ),
+      body: Container(
+        color: Color(0XFF212b26),
+        child:  Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            //chatList ->  StreamBuilder()
+            Expanded(flex:10, child: buildChatList(),),
+            //Send message -> TextField()
+            Flexible(flex: 1, child: buildSendMessage(messageController))
+          ],
+        ),
+      )
     );
   }
 
@@ -61,41 +66,53 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget buildSendMessage(TextEditingController message) {
     return Container(
+      margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
           color: CusColors().customGreen,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(10), topLeft: Radius.circular(10))),
+          borderRadius: BorderRadius.circular(60)),
       child: Row(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Icon(Icons.file_copy,color: Colors.grey, size: 35,),
+          ),
+          Icon(Icons.camera_alt,color: Colors.grey, size: 35,),
           Expanded(
             child: Padding(
               padding: EdgeInsets.all(3.0),
-              child: TextField(
-                controller: message,
-                cursorOpacityAnimates: true,
-                decoration: InputDecoration(
-                    hintText: 'Send message...',
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(color: Colors.grey)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        borderSide: BorderSide(color: Colors.white))),
+              child: Container(
+                child: TextField(
+                  controller: message,
+                  cursorOpacityAnimates: true,
+                  decoration: InputDecoration(
+                      hintText: 'Send message...',
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(60)),
+                          borderSide: BorderSide(color: Colors.grey)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(60)),
+                          borderSide: BorderSide(color: Colors.white))),
+                ),
               ),
             ),
           ),
-          IconButton(
-            focusColor: Colors.greenAccent,
-               hoverColor: Colors.green,
-              splashColor: Colors.green,
-              highlightColor: Colors.green,
-              onPressed: () {
-              ChatService().sendMessage(widget.userUID, messageController.text);
-              messageController.text = '';
-            Vibration.vibrate(duration: 100);
-          }, icon: Icon(Icons.send))
+          GestureDetector(
+            onTap: (){
+              if(messageController.text.isNotEmpty){
+                ChatService().sendMessage(widget.userUID, messageController.text);
+                messageController.text = '';
+              }
+              Vibration.vibrate(duration: 100);
+            },
+            child: Container(
+              width: 50,
+              height: 50,
+              child: RiveAnimation.asset('asset/riv/send_button_anim.riv'),
+            ),
+          )
         ],
       ),
+
     );
   }
 }

@@ -56,66 +56,76 @@ class _SignInPageState extends State<SignInPage> {
           Center(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 0, sigmaY: 100),
-              child: SizedBox(
-                child: Card(
-                    elevation: 10,
-                    color: Colors.black.withOpacity(0.3),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                              child: Text(
-                                'Signin',
-                                style: TextStyle(fontSize: 30, color: Colors.white),
-                              )),
-                          textFormFieldComponent(
-                              icon: Icons.email,
-                              controller: controllerEmail,
-                              visibleOrInvisible: false,
-                              validate: (value) {
-                                if(!(value.toString().emailOk())){
-                                  Vibration.vibrate(duration: 200);
-                                  return 'Email is wrong!';
-                                }
-                              },
-                              hint: 'Email'),
-                          textFormFieldComponent(
-                              icon: Icons.password,
-                              controller: controllerPassword,
-                              visibleOrInvisible: false,
-                              validate: (value) {
-                                if(!(value.toString().passwordOk())){
-                                  Vibration.vibrate(duration: 200);
-                                  return 'Passwor is wrong!';
-                                }
-                              },
-                              hint: 'Password'),
-                          SizedBox(
-                            height: 20,
+              child: Column(
+                children: [
+                  Expanded( child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text('Welcome Back',style: TextStyle(color: Colors.white, fontSize: 60)),
+                  )),
+                  SizedBox(
+                    height: 500,
+                    child: SizedBox(
+                      child: Container(
+                        decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(70),topLeft: Radius.circular(70)),
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                textFormFieldComponent(
+                                    icon: Icons.email,
+                                    controller: controllerEmail,
+                                    visibleOrInvisible: false,
+                                    validate: (value) {
+                                      if(!(value.toString().emailOk())){
+                                        Vibration.vibrate(duration: 200);
+                                        return 'Email is wrong!';
+                                      }
+                                    },
+                                    hint: 'Email'),
+                                textFormFieldComponent(
+                                    icon: Icons.password,
+                                    controller: controllerPassword,
+                                    visibleOrInvisible: false,
+                                    validate: (value) {
+                                      if(!(value.toString().passwordOk())){
+                                        Vibration.vibrate(duration: 200);
+                                        return 'Passwor is wrong!';
+                                      }
+                                    },
+                                    hint: 'Password'),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                buttonComponent(func: () {validate();}, text: 'Sign in'),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text.rich(TextSpan(text: 'Are you a member?',style: TextStyle(color: Colors.grey), children: [
+                                  TextSpan(
+                                      text: ' Sign up',
+                                      style: TextStyle(color: Colors.blue),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          nextScreenNamed(context,'/SignUpPage');
+                                        })
+                                ])),
+                                SizedBox(
+                                  height: 50,
+                                ),
+                              ],
+                            ),
                           ),
-                          buttonComponent(func: () {validate();}, text: 'Signin'),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text.rich(TextSpan(text: 'Are you a member?',style: TextStyle(color: Colors.grey), children: [
-                            TextSpan(
-                                text: ' Signin',
-                                style: TextStyle(color: Colors.blue),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    nextScreenNamed(context,'/SignUpPage');
-                                  })
-                          ])),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                ),
+                  )
+                ],
               ),),
           )
         ],),

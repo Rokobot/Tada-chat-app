@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tada/components/const.dart';
 
 
 class buttonComponent extends StatefulWidget {
@@ -15,9 +16,9 @@ class _buttonComponentState extends State<buttonComponent> {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: widget.func,
-      child: Text( widget.text),
+      child: Container(child: Center(child: Text( widget.text, style: TextStyle(color: Colors.white),)),width: 150,height: 50,),
       style: ButtonStyle(
-          backgroundColor:MaterialStateProperty.all(Colors.yellow),
+          backgroundColor:MaterialStateProperty.all(CusColors().customGreen),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)))),
     );;

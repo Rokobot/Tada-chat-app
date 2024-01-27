@@ -24,7 +24,7 @@ Widget userItem(
             ));
       },
       child: Card(
-        color: CusColors().customGreen,
+        color: CusColors().custPink,
         elevation: 10,
         // Set the desired height
         child: Padding(
@@ -32,52 +32,51 @@ Widget userItem(
           child: Center(
               child: Column(
             children: [
-              Expanded(
-                  child: profilePhoto == ''
-                      ? CircleAvatar(
-                          radius: 55,
-                          child: Text(
-                            username.substring(0, 1).toUpperCase(),
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      : CircleAvatar(
-                          child: Image.network(profilePhoto),
-                        )),
+              profilePhoto == ''
+                  ? CircleAvatar(
+                backgroundColor: CusColors().cusSmoth,
+                      radius: 45,
+                      child: Text(
+                        username.substring(0, 1).toUpperCase(),
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                    )
+                  : CircleAvatar(
+                      child: Image.network(profilePhoto),
+                    ),
               Expanded(
                 child: Text(
                   username,
                   style: TextStyle(color: Colors.white),
                 ),
               ),
+              Expanded(child: Text(
+                textAlign: TextAlign.center,
+                'Hello i am using tada and very good app like it really',
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 10),
+              ) ),
               Expanded(
-                  child: Container(
-                      decoration: BoxDecoration(
-                          color: CusColors().cusGreenYellow,
-                          borderRadius: BorderRadius.circular(25)),
-                      child: Center(
-                          child: InkWell(
-                        highlightColor: Colors.white,
-                        focusColor: Colors.orange,
-                        onTap: () {
-                          Vibration.vibrate(duration: 90);
+                  child:Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Baku'),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: (){
                           NotfService().sendConnectNotf(UID);
-                          print('Hello');
                         },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              color: Colors.black,
-                            ),
-                            Text(
-                              'connect',
-                              style: TextStyle(color: Colors.black),
-                            )
-                          ],
+                        child: Container(
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: LinearGradient(colors: [CusColors().cusPinkShade700, CusColors().cusPinkShade100,], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+                          ),
+                          child: Center(child: Text('CONNECT', style: TextStyle(color: Colors.white),)),
                         ),
-                      ))))
+                      )
+                    ],
+                  ))
             ],
           )),
         ),

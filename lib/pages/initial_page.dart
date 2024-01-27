@@ -5,6 +5,7 @@ import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tada/components/const.dart';
 import 'package:tada/components/methods/methods.dart';
 import 'package:video_player/video_player.dart';
 
@@ -63,26 +64,47 @@ class _InitialPageState extends State<InitialPage> {
           ),
           Container(color: Colors.black.withOpacity(0.4),),
           Positioned(
-            top: 50,
-            left: 20,
             child: SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('Tada', style: TextStyle(color: Colors.white, fontSize: 50),),
-                  Text('Your new home', style: TextStyle(color: Colors.white, fontSize: 30)),
-                ],
+              width: 600,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.4),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(70),
+                    bottomLeft: Radius.circular(70),
+                  )
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Tada', style: TextStyle(color: Colors.white, fontSize: 80, fontFamily: 'Cosmic'),),
+                    Text('Your new home', style: TextStyle(color: Colors.white, fontSize: 30, fontFamily: 'Cosmic')),
+                    SizedBox(height: 40,)
+                  ],
+                ),
               ),
 
             ),
           ),
           Positioned(
-          bottom: 10,
-              left: 150,
-              child: ElevatedButton(onPressed: (){
+          bottom: 30,
+              left:90,
+              child: ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(CusColors().customGreen)),
+                  onPressed: (){
                 checkRepo();
-              }, child: Text('Start')))
+              }, child: Center(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  width: 160,
+                  child: Center(child: Text('get Start', style: TextStyle(color: Colors.white, fontFamily: 'Cosmic', fontSize: 20),))),
+                            )))),
+          Positioned(
+              bottom: 10,
+              left: 116,
+              child: Text('Developed by Ali Hasanov')),
+
         ],
       )
     );

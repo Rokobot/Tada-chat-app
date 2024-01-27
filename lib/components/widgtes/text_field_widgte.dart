@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tada/components/const.dart';
 
 
 
@@ -21,12 +22,14 @@ class _textFormFieldComponentState extends State<textFormFieldComponent> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.black),
         controller: widget.controller,
         obscureText: widget.visibleOrInvisible,
         validator: widget.validate,
         decoration: InputDecoration(
-          prefixIcon:Icon(widget.icon, color: Colors.white,),
+          filled: true,
+          fillColor: CusColors().cusWhiteShaed500,
+          prefixIcon:Icon(widget.icon, color: Colors.grey,),
           suffixIcon: widget.hint == 'Email' || widget.hint == 'Username' ? SizedBox() : GestureDetector( onTap: (){setState(() {
             widget.visibleOrInvisible =! widget.visibleOrInvisible;
           });}, child: widget.visibleOrInvisible ? Icon(Icons.visibility_off): Icon(Icons.visibility)),
@@ -34,10 +37,13 @@ class _textFormFieldComponentState extends State<textFormFieldComponent> {
           hintStyle: TextStyle(color: Colors.grey),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.white)),
+              borderSide: BorderSide(color: Colors.grey)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.green)),
+              borderSide: BorderSide(color: Colors.white)),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.red)),
         ),
       ),
     );
