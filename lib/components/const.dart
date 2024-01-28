@@ -7,7 +7,8 @@ class CusColors{
   final cusWhiteShaed500 = const Color(0XFFebe9e4);
   final custDark = const Color(0XFF24293d);
   final custDarkPalette = const Color(0XFF2f3652);
-  final custPink = const Color(0XFF6E7482);
+  final custPink = const Color(0XFF5a6b67);
+  final custCosmic = const Color(0XFF09090B);
   final cusSmoth = const Color(0XFFF8DADC);
   final cusPinkShade700 = const Color(0XFFe8a7bb);
   final cusPinkShade100 = const Color(0XFFdea4b6);

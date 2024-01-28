@@ -32,18 +32,9 @@ Widget userItem(
           child: Center(
               child: Column(
             children: [
-              profilePhoto == ''
-                  ? CircleAvatar(
-                backgroundColor: CusColors().cusSmoth,
-                      radius: 45,
-                      child: Text(
-                        username.substring(0, 1).toUpperCase(),
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-                      ),
-                    )
-                  : CircleAvatar(
-                      child: Image.network(profilePhoto),
-                    ),
+              profilePhoto == '' ? CircleAvatar(child: Text(
+                username.substring(0, 1),
+                style: TextStyle(fontSize: 40),),):CircleAvatar( backgroundImage: ExactAssetImage(profilePhoto),radius: 40,),
               Expanded(
                 child: Text(
                   username,
@@ -54,19 +45,24 @@ Widget userItem(
                 textAlign: TextAlign.center,
                 'Hello i am using tada and very good app like it really',
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 10),
+                style: TextStyle(fontSize: 10, color: Colors.white),
               ) ),
               Expanded(
                   child:Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Baku'),
+                      Text('Baku', style: TextStyle(color: Colors.white),),
                       Spacer(),
-                      GestureDetector(
+                      InkWell(
+                        radius: 10,
+                        focusColor: Colors.white,
+                        hoverColor: Colors.blue,
+                        splashColor: Colors.green,
                         onTap: (){
                           NotfService().sendConnectNotf(UID);
+                          Vibration.vibrate(duration: 100);
                         },
-                        child: Container(
+                        child: Ink(
                           width: 100,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -124,7 +120,7 @@ showItem(QuerySnapshot<Map<String, dynamic>> data, BuildContext context) {
     itemBuilder: (context, index) {
       return userItem(
         data.docs[index]['userName'],
-        '',
+        'asset/images/profile_photo.jpg',
         context,
         data.docs[index]['userUID'],
       );
@@ -132,7 +128,6 @@ showItem(QuerySnapshot<Map<String, dynamic>> data, BuildContext context) {
     itemCount: data!.docs.length,
   );
 }
-
 //This items show when you searched user from search
 seacrhResultItem(QuerySnapshot<Map<String, dynamic>> data) {
   return ListView.builder(
@@ -223,16 +218,25 @@ messsageItem(String message, String UID, String sender, String timeStamp) {
               decoration: BoxDecoration(
                   color: CusColors().customGreen,
                   borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(100),
-                      topLeft: Radius.circular(100),
-                      bottomLeft: Radius.circular(100))),
+                      topRight: Radius.circular(50),
+                      topLeft: Radius.circular(50),
+                      bottomLeft: Radius.circular(50))),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      message,
-                      style: TextStyle(fontSize: 21, color: Colors.white),
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 300),
+                      decoration: BoxDecoration(  border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(30)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          textAlign:TextAlign.justify,
+                          message,
+                          style: TextStyle(fontSize: 21, color: Colors.white,),
+                        ),
+                      ),
                     ),
                     Text(
                       timeStamp,
@@ -260,10 +264,17 @@ messsageItem(String message, String UID, String sender, String timeStamp) {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(
-                      message,
-                      style: TextStyle(fontSize: 21, color: Colors.white),
-                    ),
+               Container(
+                 decoration: BoxDecoration(border: Border.all(color: Colors.grey), borderRadius: BorderRadius.circular(50)),
+                 child: Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Text(
+                     textAlign: TextAlign.justify,
+                     message,
+                     style: TextStyle(fontSize: 21, color: Colors.white),
+                   ),
+                 ),
+               ),
                     Text(
                       timeStamp,
                       style: TextStyle(fontSize: 10, color: Colors.white),
@@ -295,17 +306,23 @@ notfItem(int data, BuildContext context) {
               top: 5,
               child: Icon(
                 Icons.notifications,
+                color: Colors.white,
+                size: 30,
               ),
             ),
             Positioned(
-                top: 13,
-                right: 6,
-                child: Text(
-                  data == 0 ? "" : data.toString(),
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 19),
+                top: 18,
+                right: 12,
+                child:data == 0 ? Container() :  CircleAvatar(
+                  backgroundColor: Colors.greenAccent,
+                  radius: 10,
+                  child: Text(
+                    data.toString(),
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
                 )),
           ],
         ),
@@ -319,7 +336,7 @@ notfReqItem(String userName, int index) {
     padding: const EdgeInsets.all(8.0),
     child: Ink(
       decoration: BoxDecoration(
-          color: CusColors().customGreen,
+          color: CusColors().custPink,
           borderRadius: BorderRadius.circular(10)),
       child: InkWell(
         onTap: () {},
@@ -328,8 +345,9 @@ notfReqItem(String userName, int index) {
           title: Text.rich(TextSpan(
               text: '${userName}',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 23,
                 fontWeight: FontWeight.bold,
+                color: Colors.white
               ),
               children: [
                 TextSpan(
@@ -340,22 +358,22 @@ notfReqItem(String userName, int index) {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(
+              TextButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
                   onPressed: () {
                     NotfService().acceptRequest(userName, index);
                   },
-                  icon: Icon(
-                    Icons.verified_user,
-                    color: Colors.green,
+                  child: Text(
+                    'accept', style: TextStyle(color: Colors.green),
                   )),
-              IconButton(
+              SizedBox(width: 5,),
+              TextButton(
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
                   onPressed: () {
                     NotfService().rejectRequest(index);
                   },
-                  icon: Icon(
-                    Icons.close_sharp,
-                    color: Colors.red,
-                    size: 30,
+                  child: Text(
+                    'reject', style: TextStyle(color: Colors.red),
                   ))
             ],
           ),

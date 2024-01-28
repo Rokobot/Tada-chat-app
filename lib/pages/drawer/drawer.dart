@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tada/components/const.dart';
 import 'package:vibration/vibration.dart';
 import '../../components/methods/methods.dart';
 import '../profile_page.dart';
@@ -27,18 +28,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              DrawerHeader(child: Column(
+                children: [
+                  Text('Tada', style: TextStyle(fontSize: 80, fontFamily: 'Cosmic'),),
+                ],
+              ),),
+              Flexible(flex: 3,
+                  child: widget.profilePhoto == '' ? CircleAvatar(child: Text(
+                    widget.userName.substring(0, 1),
+                    style: TextStyle(fontSize: 40),),):CircleAvatar( backgroundImage: ExactAssetImage(widget.profilePhoto),radius: 80,)),
               Flexible(flex: 1,
-                  child: CircleAvatar(radius: 60,
-                    child: widget.profilePhoto == '' ? Text(
-                      widget.userName.substring(0, 1),
-                      style: TextStyle(fontSize: 40),) : Image.network(
-                      widget.profilePhoto,),)),
-              Flexible(flex: 1,
-                  child: Text(widget.userName, style: TextStyle(fontSize: 20))),
-              Flexible(flex: 1,
-                  child: Text(widget.email, style: TextStyle(fontSize: 15))),
-              Flexible(flex: 1,
-                  child: Text(widget.jcode, style: TextStyle(fontSize: 15))),
+                  child: Text('My name is ${widget.userName}', style: TextStyle(fontSize: 20))),
               Spacer(),
               Flexible(flex: 1,
                   child: InkWell(

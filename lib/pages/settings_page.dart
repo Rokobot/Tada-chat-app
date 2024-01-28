@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rive/rive.dart';
 import 'package:tada/components/methods/methods.dart';
 import 'package:tada/components/variables/components.dart';
 import 'package:tada/state_managment/theme/theme_bloc.dart';
@@ -56,11 +57,44 @@ class _SettingsPageState extends State<SettingsPage> {
                   },
                 ),),
                 customListTile(Text('Support',), IconButton(icon: Icon(Icons.call), onPressed: (){Vibration.vibrate(duration: 90);})),
+                customListTile(Text('Delete your account',style: TextStyle(color: Colors.red),), IconButton(icon: Icon(Icons.delete_sweep_sharp), onPressed: (){Vibration.vibrate(duration: 90);})),
                 customListTile(Text('Signout', style: TextStyle(color: Colors.red),), IconButton(icon: Icon(Icons.exit_to_app), onPressed: (){
                   setState(() {
                     Vibration.vibrate(duration: 90);
-                    firebaseAuth.signOut();
-                    replaceScreenNamed(context, '/SignInPage');
+                    showDialog( barrierDismissible: false,context: context, builder: (context){
+                      return Dialog(
+                        elevation: 100,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(height: 100,width: 100,child: RiveAnimation.asset('asset/riv/rocket_animation.riv'),),
+                            Text('Did you wanna sign out? '),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TextButton(
+                                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.green)),
+                                    onPressed: (){
+                                      firebaseAuth.signOut();
+                                      replaceScreenNamed(context, '/SignInPage');
+                                      Vibration.vibrate(duration: 90);
+                                    }, child: Text('yes', style: TextStyle(color: Colors.white))),
+                                SizedBox(width: 30,),
+                                TextButton(
+                                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),
+                                  onPressed: (){
+                                    Navigator.pop(context);
+                                    Vibration.vibrate(duration: 90);
+                                  }, child: Text('cancel', style: TextStyle(color: Colors.white),),),
+                              ],
+                            ),
+                            SizedBox(height: 5,)
+                          ],
+                        )
+                      );
+                    });
+
                   });
                 })),
 

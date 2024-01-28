@@ -1,15 +1,10 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:chewie/chewie.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tada/components/const.dart';
 import 'package:tada/components/methods/methods.dart';
 import 'package:video_player/video_player.dart';
 
-import '../services/fetchUserFromRepo.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -29,13 +24,20 @@ class _InitialPageState extends State<InitialPage> {
     _videoPlayerController.initialize().then((_) {
       _videoPlayerController.setLooping(true);
       _videoPlayerController.play();
+      startTime();
     });
+
+  }
+
+  startTime()async{
+    await Future.delayed(Duration(seconds: 4));
+    checkRepo();
   }
 
 
   checkRepo() async{
-
      //Get info to choise first screen
+    _videoPlayerController.pause();
     final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     firebaseAuth.authStateChanges().listen((event) {
 
@@ -56,19 +58,21 @@ class _InitialPageState extends State<InitialPage> {
   }
   @override
   Widget build(BuildContext context) {
+    //checkRepo();
     return Scaffold(
       body: Stack(
         children: [
           SizedBox(
             child: VideoPlayer(_videoPlayerController),
           ),
-          Container(color: Colors.black.withOpacity(0.4),),
-          Positioned(
+          Container(color: Colors.black.withOpacity(0.5),),
+          Align(
+            alignment: Alignment.center,
             child: SizedBox(
               width: 600,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.4),
+                  color: Colors.black.withOpacity(0),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(70),
                     bottomLeft: Radius.circular(70),
@@ -88,22 +92,9 @@ class _InitialPageState extends State<InitialPage> {
             ),
           ),
           Positioned(
-          bottom: 30,
-              left:90,
-              child: ElevatedButton(
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(CusColors().customGreen)),
-                  onPressed: (){
-                checkRepo();
-              }, child: Center(child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                  width: 160,
-                  child: Center(child: Text('get Start', style: TextStyle(color: Colors.white, fontFamily: 'Cosmic', fontSize: 20),))),
-                            )))),
-          Positioned(
               bottom: 10,
               left: 116,
-              child: Text('Developed by Ali Hasanov')),
+              child: Text('Developed by Ali Hasanov', style: TextStyle(color: Colors.white),)),
 
         ],
       )

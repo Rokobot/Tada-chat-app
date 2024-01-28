@@ -22,6 +22,10 @@ class _ChatPageState extends State<ChatPage> {
   TextEditingController messageController = TextEditingController();
   //current user UID
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  //scroll contrller
+  final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +40,9 @@ class _ChatPageState extends State<ChatPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             //chatList ->  StreamBuilder()
-            Expanded(flex:10, child: buildChatList(),),
+            Expanded(child: buildChatList(),),
             //Send message -> TextField()
-            Flexible(flex: 1, child: buildSendMessage(messageController))
+            buildSendMessage(messageController)
           ],
         ),
       )
@@ -56,7 +60,13 @@ class _ChatPageState extends State<ChatPage> {
       if(snapshot.connectionState == ConnectionState.waiting){
         return Center(child: CircularProgressIndicator(color: Colors.blue,),);
       }
-      return ListView.builder( itemCount: snapshot.data!.docs.length,itemBuilder: (context, index){
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        // Scroll to the end after the frame is built
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      });
+      return ListView.builder(
+        controller: _scrollController,
+        itemCount: snapshot.data!.docs.length,itemBuilder: (context, index){
         DateTime date = DateTime.parse(snapshot.data!.docs[index]['timeStamp'].toDate().toString());
         String time = DateFormat('HH:mm').format(date);
         return messsageItem(snapshot.data!.docs[index]['message'],snapshot.data!.docs[index]['senderUID'], snapshot.data!.docs[index]['senderEmail'],time.toString());

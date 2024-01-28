@@ -37,33 +37,36 @@ class _ProfilePageState extends State<ProfilePage> {
               )),
                 SizedBox(width: 10,),
             ],),
-
             Container(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(100),color: Colors.white),
               child: Padding(
                 padding: const EdgeInsets.all(2.0),
                 child: CircleAvatar(
-                  child: Text(widget.userName.substring(0,1),style: TextStyle(fontSize: 60),),
+                  child: CircleAvatar(radius: 60, backgroundImage: ExactAssetImage('asset/images/profile_photo.jpg'),),
                   radius: 60,
                 ),
               ),
             ),
             SizedBox(height: 30,),
-            Card(elevation: 10, child: Padding(
+            Card(
+                color: CusColors().custCosmic,
+                elevation: 10, child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('  ${widget.userName}', style: TextStyle(fontSize: 16),),
+              child: Text('  ${widget.userName}', style: TextStyle(fontSize: 16, color: Colors.white),),
             )),
-            Card(elevation: 10, child: Padding(
+            Card(
+                color: CusColors().custCosmic,
+                elevation: 10, child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('  ${widget.email}', style: TextStyle(fontSize: 16),),
+              child: Text('  ${widget.email}', style: TextStyle(fontSize: 16, color: Colors.white),),
             )),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(
-                  color: CusColors().customGreen,
+                  color: CusColors().custCosmic,
                   elevation: 10, child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text('Thanks to Tada, I made new friends. I learned their language, culture, and cuisine. Tada is a truly wonderful application.', style: TextStyle(fontSize: 15,), textAlign: TextAlign.center,),
+                child: Text('Thanks to Tada, I made new friends. I learned their language, culture, and cuisine. Tada is a truly wonderful application.', style: TextStyle(fontSize: 15, color: Colors.white), textAlign: TextAlign.center,),
               )),
             ),
             Expanded(
@@ -72,14 +75,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 List<dynamic> nameJoinCodeAndConnect = ['JCODE ', 'Connection'];
 
                 return Card(
-                    color: CusColors().customGreen,
+                    color: CusColors().custDark,
                     elevation: 10, child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Text(nameJoinCodeAndConnect[index], style: TextStyle(fontSize: 16),),
-                    Text(joinCodeAndConnect[index], style: TextStyle(fontSize: 32),)
+                    Text(nameJoinCodeAndConnect[index], style: TextStyle(fontSize: 16, color: Colors.white),),
+                    Text(joinCodeAndConnect[index], style: TextStyle(fontSize: 32, color: Colors.white),)
                   ],)),
                 ));
               }),

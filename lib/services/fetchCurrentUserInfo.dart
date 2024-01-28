@@ -22,7 +22,7 @@ class FetchCurrentUserInfo {
             return Center(child: CircularProgressIndicator(color: Colors.blue,),);
           }
           QuerySnapshot<Map<String, dynamic>>  data = snapshot.data!;
-          return CustomDrawer(email: data.docs[0]['email'],userName: data.docs[0]['userName'],profilePhoto: '',jcode: data.docs[0]['JCode']);
+          return CustomDrawer(email: data.docs[0]['email'],userName: data.docs[0]['userName'],profilePhoto: 'asset/images/profile_photo.jpg',jcode: data.docs[0]['JCode']);
         });
   }
 }
