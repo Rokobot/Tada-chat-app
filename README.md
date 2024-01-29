@@ -3,6 +3,8 @@
 _I am working on it..._
 
 
+![tada_image](https://github.com/Rokobot/Tada-chat-app/assets/117278851/1ef9e77c-54db-4e2a-8460-e14e7d035e6a)
+
 Packages I use in this application:
 
 cupertino_icons: ^1.0.2
